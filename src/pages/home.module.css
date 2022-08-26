@@ -1,0 +1,17 @@
+.homeContainer {
+  position: relative;
+  left: 100px;
+  width: 200px;
+  height: fit-content;
+  border: 1px solid lightgray;
+}
+
+.userNameInputField {
+  border: none;
+  border-bottom: 1px solid lightgray;
+}
+.userNameInputField:focus {
+  border: none;
+  border-bottom: 1px solid blue;
+  outline: none;
+}
