@@ -8,14 +8,13 @@ import SavedRepos from "./pages/SavedRepos";
 
 const [userName, setUserName] = createSignal("arvindchoudhary33");
 const [repos, setRepos] = createSignal([]);
+createEffect(async () => {
+  const res = await fetch(
+    `https://api.github.com/users/${userName()}/repos?sort=created`
+  );
+  setRepos(await res.json());
+});
 const App: Component = () => {
-  createEffect(async () => {
-    const res = await fetch(
-      `https://api.github.com/users/${userName()}/repos?sort=created`
-    );
-    setRepos(await res.json());
-  });
-
   return (
     <div class={styles.App}>
       <Nav />

@@ -1,4 +1,5 @@
-import { Component, createEffect } from "solid-js";
+import { Component, For } from "solid-js";
+import RepoCard, { Repo } from "../components/RepoCard";
 import styles from "./home.module.css";
 import { repos, setUserName, userName } from "../App";
 
@@ -10,10 +11,6 @@ const Home: Component = () => {
     ) as HTMLInputElement;
     setUserName(userInput.value);
   };
-
-  createEffect(() => {
-    console.log("inside home", repos());
-  });
 
   return (
     <div>
@@ -30,6 +27,7 @@ const Home: Component = () => {
         <button class={styles.userNameSubmitButton}>Fetch</button>
       </form>
       <h2>Github repos for {userName()} </h2>
+      <For each={repos()}>{(repo: Repo) => <RepoCard repo={repo} />}</For>
     </div>
   );
 };

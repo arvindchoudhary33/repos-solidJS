@@ -1,4 +1,5 @@
 import { Component } from "solid-js";
+import { savedRepos, setSavedRepos } from "../pages/SavedRepos";
 import styles from "./RepoCard.module.css";
 export type Repo = {
   id: string;
@@ -15,6 +16,21 @@ interface Props {
   repo: Repo;
 }
 
+const saveRepo = (repo: Repo) => {
+  setSavedRepos([repo, ...savedRepos()]);
+  localStorage.setItem("savedRepos", JSON.stringify(savedRepos()));
+};
+
+const unSaveRepos = (repoId: string) => {
+  const nextState = savedRepos()?.filter((items) => items.id !== repoId);
+  setSavedRepos(nextState);
+  localStorage.setItem("savedRepos", JSON.stringify(savedRepos()));
+};
+
+const isRepoSaved = (repoId: string) => {
+  const repo = savedRepos()?.filter((items) => items.id === repoId);
+  return repo?.length > 0;
+};
 const RepoCard: Component<Props> = ({ repo }) => {
   return (
     <div class={styles.repoCardMainContainer}>
@@ -24,8 +40,22 @@ const RepoCard: Component<Props> = ({ repo }) => {
           <strong>{repo.owner?.login}</strong>/{repo.name}
         </a>
         <p class={styles.repoDescription}>{repo.description}</p>
-        <button class="commonButton save">SAVE</button>
+
+        {isRepoSaved(repo.id) ? (
+          <button
+            class="commonButton  save"
+            onclick={() => unSaveRepos(repo.id)}
+          >
+            UNSAVE
+          </button>
+        ) : (
+          <button class="commonButton  save" onclick={() => saveRepo(repo)}>
+            SAVE
+          </button>
+        )}
       </div>
     </div>
   );
 };
+
+export default RepoCard;

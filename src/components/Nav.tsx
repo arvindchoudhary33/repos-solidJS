@@ -1,6 +1,7 @@
 import { Component } from "solid-js";
 import { NavLink } from "solid-app-router";
 import styles from "./Nav.module.css";
+import { savedRepos } from "../pages/SavedRepos";
 const Nav: Component = () => {
   return (
     <div>
@@ -19,7 +20,7 @@ const Nav: Component = () => {
           class={styles.navLinkButton}
           activeClass={styles.navLinkActive}
         >
-          Saved : 5
+          Saved : {savedRepos().length}
         </NavLink>
       </nav>
     </div>
